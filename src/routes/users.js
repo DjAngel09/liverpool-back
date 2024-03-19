@@ -1,11 +1,14 @@
+import { Router } from 'express';
+import { createUser, getUsers } from '../controllers/users.js';
+
 /*
     Rutas de Productos
     host + /api/users
 */
-const { Router } = require('express');
-const { getUsers } = require('../controllers/users');
+
 const router = Router();
 
 router.get('/', getUsers);
+router.post('/', createUser);
 
-module.exports = router;
+export default router;

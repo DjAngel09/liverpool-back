@@ -1,18 +1,39 @@
-const { response } = require('express');
+import { response } from 'express';
+import User from '../models/user.model.js'
 
-const getUsers = async (req, res = response) => {
 
-    res.send('hola mundo')
+export const getUsers = async (req, res = response) => {
 
-    // Todo.find((err, todos) => {
-    //     if (err) {
-    //         res.send(err);
-    //     }
-    //     res.json(todos);
-    // });
+    User.find((err, todos) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(todos);
+    });
 
 }
 
-module.exports = {
-    getUsers,
+export const createUser = async (req, res = response) => {
+
+    const { name, lastname, secondLastname, email } = req.body;
+    
+    console.log(req.body);
+
+    try {
+        const user = new User({
+            name,
+            lastname,
+            secondLastname,
+            email
+        });
+
+        await user.save();
+
+        res.send('usuario registrado');
+
+    } catch (error) {
+        console.log(error);
+        res.send('error')
+    }
+
 }
